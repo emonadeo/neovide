@@ -128,3 +128,10 @@
 .DocSearch {
     --docsearch-primary-color: var(--vp-c-brand-1) !important;
 }
+
+/**
+* Component: VPHero
+*/
+.VPHero {
+    background-image: linear-gradient(120deg, oklch(66% 0.2 150 / 50%), oklch(66% 0.15 235 / 50%));
+}

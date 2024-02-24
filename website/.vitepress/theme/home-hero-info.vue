@@ -68,32 +68,18 @@ const { theme, frontmatter } = useData<Config>()
 		position: relative;
 		grid-column: 1 / 3;
 		grid-row: 2 / 3;
-		background-image: linear-gradient(to right, var(--vp-c-bg) 256px, color-mix(in lch, var(--vp-c-bg), transparent 66%) 100%);
 		padding: 64px 64px 0 0;
 
 		.text {
 			z-index: 1;
 			position: relative;
 		}
-
-		&::after {
-			position: absolute;
-			top: 0;
-			right: 0;
-			bottom: 0;
-			left: 0;
-			content: '';
-			border-top-right-radius: 16px;
-			border-top: 1px solid var(--vp-c-border);
-			border-right: 1px solid var(--vp-c-border);
-			backdrop-filter: blur(4px);
-			mask-image: linear-gradient(to right, transparent 196px, black 320px);
-		}
 	}
 
 	.image {
 		grid-column: 2 / 4;
 		grid-row: 1 / 3;
+		filter: drop-shadow(0 0 16px rgba(0, 0, 0, 0.5));
 	}
 }
 
