@@ -205,10 +205,10 @@ with partial transparency, while <code>X</code> is a type of edging:
 <li><code>#h-X</code> (available since 0.10.2) - Sets level of glyph outline adjustment, while <code>X</code> is
 a type of hinting:
 <ul>
-<li>full (default)</li>
+<li>full</li>
 <li>normal</li>
 <li>slight</li>
-<li>none</li>
+<li>none (default)</li>
 </ul>
 </li>
 </ul>
@@ -243,6 +243,22 @@ should Hack fail to contain any glyph.</li>
 <p>In addition to setting the font itself, this setting allows to change the scale without changing the
 whole font definition. Very useful for presentations. See <a href="faq.html#how-can-i-dynamically-change-the-scale-at-runtime">the FAQ section about
 this</a> for a nice recipe to bind this to a hotkey.</p>
+<h4 id="text-gamma-and-contrast"><a class="header" href="#text-gamma-and-contrast">Text Gamma and Contrast</a></h4>
+<p>VimScript:</p>
+<pre><code class="language-vim">let g:neovide_text_gamma = 0.0
+let g:neovide_text_contrast = 0.5
+</code></pre>
+<p>Lua:</p>
+<pre><code class="language-lua">vim.g.neovide_text_gamma = 0.0
+vim.g.neovide_text_contrast = 0.5
+</code></pre>
+<p><strong>Unreleased yet.</strong></p>
+<p>You can fine tune the gamma and contrast of the text to your liking. The defaults is a good
+compromise that gives readable text on all backgrounds and an accurate color representation. But if
+that doesn't suit you, and you want to emulate the Alacritty font rendering for example you can use
+a gamma of 0.8 and a contrast of 0.1.</p>
+<p>Note a gamma of 0.0, means standard sRGB gamma or 2.2. Also note that these settings don't
+necessarily apply immediately due to caching of the fonts.</p>
 <h4 id="padding"><a class="header" href="#padding">Padding</a></h4>
 <p>VimScript:</p>
 <pre><code class="language-vim">let g:neovide_padding_top = 0
@@ -489,12 +505,13 @@ from the previous session or the default size will be used on startup. The comma
 <p>Setting this to <code>v:true</code> enables the profiler, which shows a frametime graph in the upper left
 corner.</p>
 <h3 id="input-settings"><a class="header" href="#input-settings">Input Settings</a></h3>
-<h4 id="macos-alt-is-meta"><a class="header" href="#macos-alt-is-meta">macOS Alt is Meta</a></h4>
+<h4 id="macos-option-key-is-meta"><a class="header" href="#macos-option-key-is-meta">macOS Option Key is Meta</a></h4>
+<p>Possible values are <code>both</code>, <code>only_left</code>, <code>only_right</code>, <code>none</code>. Set to <code>none</code> by default.</p>
 <p>VimScript:</p>
-<pre><code class="language-vim">let g:neovide_input_macos_alt_is_meta = v:false
+<pre><code class="language-vim">let g:neovide_input_macos_option_key_is_meta = 'only_left'
 </code></pre>
 <p>Lua:</p>
-<pre><code class="language-lua">vim.g.neovide_input_macos_alt_is_meta = false
+<pre><code class="language-lua">vim.g.neovide_input_macos_option_key_is_meta = 'only_left'
 </code></pre>
 <p><strong>Available since 0.10.</strong></p>
 <p>Interprets <kbd>Alt</kbd> + <kbd>whatever</kbd> actually as <code>&lt;M-whatever&gt;</code>, instead of sending the
@@ -514,8 +531,8 @@ a few auto commands:</p>
     autocmd!
     autocmd InsertLeave * execute &quot;let g:neovide_input_ime=v:false&quot;
     autocmd InsertEnter * execute &quot;let g:neovide_input_ime=v:true&quot;
-    autocmd CmdlineEnter [/\?] execute &quot;let g:neovide_input_ime=v:false&quot;
-    autocmd CmdlineLeave [/\?] execute &quot;let g:neovide_input_ime=v:true&quot;
+    autocmd CmdlineLeave [/\?] execute &quot;let g:neovide_input_ime=v:false&quot;
+    autocmd CmdlineEnter [/\?] execute &quot;let g:neovide_input_ime=v:true&quot;
 augroup END
 </code></pre>
 <pre><code class="language-lua">local function set_ime(args)
@@ -632,6 +649,16 @@ command line.</p>
 If the value is &lt;=0 then the cursor will be invisible. This setting takes effect when the editor
 window is unfocused, at which time a block cursor will be rendered as an outline instead of as a
 full rectangle.</p>
+<h4 id="animate-cursor-blink"><a class="header" href="#animate-cursor-blink">Animate cursor blink</a></h4>
+<p>VimScript:</p>
+<pre><code class="language-vim">let g:neovide_cursor_smooth_blink = v:false
+</code></pre>
+<p>Lua:</p>
+<pre><code class="language-lua">vim.g.neovide_cursor_smooth_blink = false
+</code></pre>
+<p>If enabled, the cursor will smoothly animate the transition between the cursor's on and off state.
+The built in <code>guicursor</code> neovim option needs to be configured to enable blinking by having a value
+set for both <code>blinkoff</code>, <code>blinkon</code> and <code>blinkwait</code> for this setting to apply.</p>
 <h3 id="cursor-particles"><a class="header" href="#cursor-particles">Cursor Particles</a></h3>
 <p>There are a number of vfx modes you can enable which produce particles behind the cursor. These are
 enabled by setting <code>g:neovide_cursor_vfx_mode</code> to one of the following constants.</p>
